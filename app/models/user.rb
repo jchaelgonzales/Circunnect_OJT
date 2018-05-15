@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-	has_one :blood_group
 	has_many :request
 	has_secure_token :auth_token
 	has_secure_password

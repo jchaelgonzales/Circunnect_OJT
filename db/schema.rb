@@ -12,12 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2018_05_14_175309) do
 
-  create_table "blood_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.string "blood_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "request_accepted"
     t.datetime "created_at", null: false
@@ -32,6 +26,7 @@ ActiveRecord::Schema.define(version: 2018_05_14_175309) do
     t.string "last_name"
     t.date "birthday"
     t.string "gender"
+    t.string "blood_type"
     t.string "address_street"
     t.string "address_city"
     t.string "address_province"
