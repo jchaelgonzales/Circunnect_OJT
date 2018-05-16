@@ -14,6 +14,8 @@ ActiveRecord::Schema.define(version: 2018_05_14_175309) do
 
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "request_accepted"
+    t.string "request_finder"
+    t.string "request_donor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
