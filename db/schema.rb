@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2018_05_14_175309) do
     t.string "address_city"
     t.string "address_province"
     t.string "contact_info"
+    t.string "user_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "auth_token"
