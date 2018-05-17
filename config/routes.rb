@@ -4,10 +4,10 @@ Rails.application.routes.draw do
 			resources :users
 			resources :requests
 			resources :bloodgroups
+
+			post 'sessions', to: 'sessions#create', as:'login'
+			delete 'sessions', to: 'sessions#destroy', as: 'logout'
 		end
 	end
-
-	post 'session', to: 'session#create', as:'login'
-	delete 'session', to: 'session#destroy', as: 'logout'
 	
 end
