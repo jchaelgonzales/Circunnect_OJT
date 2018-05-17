@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+	mount_uploader :avatar, AvatarUploader
 	has_many :request
 	has_secure_token :auth_token
 	has_secure_password
@@ -16,4 +17,5 @@ class User < ApplicationRecord
 	validates :address_city, presence: true
 	validates :address_province, presence: true
 	validates :contact_info, presence: true
+	
 end
