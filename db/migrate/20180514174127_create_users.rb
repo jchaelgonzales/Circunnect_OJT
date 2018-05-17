@@ -13,6 +13,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :address_city
       t.string :address_province
       t.string :contact_info
+      t.string :avatar
       t.string :user_type
 
       t.timestamps
