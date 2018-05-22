@@ -26,15 +26,15 @@ class Api::V1::RequestsController < ApplicationController
 		render json: {status: 'SUCCESS', message:'Deleted request', data:request}, status: :ok
 	end
 
-	def update
-		request = Request.find(params[:id])
+	# def update
+	# 	request = Request.find(params[:id])
 
-		if request.update_attributes(request_params)
-			render json: {status: 'SUCCESS', message:'Updated request', data:request}, status: :ok
-		else
-			render json: {status: 'ERROR', message:'Request not updated', data:request}, status: :unprocessable_entity
-		end
-	end
+	# 	if request.update_attributes(request_params)
+	# 		render json: {status: 'SUCCESS', message:'Updated request', data:request}, status: :ok
+	# 	else
+	# 		render json: {status: 'ERROR', message:'Request not updated', data:request}, status: :unprocessable_entity
+	# 	end
+	# end
 
 	private
 
