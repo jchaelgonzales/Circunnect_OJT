@@ -13,11 +13,11 @@
 ActiveRecord::Schema.define(version: 2018_05_14_175309) do
 
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.string "request_accepted"
-    t.string "request_finder"
-    t.string "request_donor"
+    t.boolean "request_accepted"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 2018_05_14_175309) do
     t.string "password_digest"
     t.string "first_name"
     t.string "last_name"
-    t.date "birthday"
+    t.string "month"
+    t.integer "day"
+    t.integer "year"
     t.string "gender"
     t.string "blood_type"
     t.string "address_street"
@@ -35,10 +37,12 @@ ActiveRecord::Schema.define(version: 2018_05_14_175309) do
     t.string "contact_info"
     t.string "avatar"
     t.string "user_type"
+    t.boolean "user_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "auth_token"
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
   end
 
+  add_foreign_key "requests", "users"
 end
