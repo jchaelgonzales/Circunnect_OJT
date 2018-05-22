@@ -6,7 +6,9 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :password_digest
       t.string :first_name
       t.string :last_name
-      t.date :birthday
+      t.string :month
+      t.integer :day
+      t.integer :year
       t.string :gender
       t.string :blood_type
       t.string :address_street
@@ -15,6 +17,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :contact_info
       t.string :avatar
       t.string :user_type
+      t.boolean :user_status
 
       t.timestamps
     end
