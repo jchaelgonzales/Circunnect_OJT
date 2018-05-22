@@ -1,5 +1,7 @@
-class Api::V1::UsersController < ApplicationController
 
+class Api::V1::UsersController < ApplicationController
+	before_action :require_login, only: [:index, :update]
+	
 	def index
 		users = User.order('created_at DESC');
 		render json: users.reload, status: :ok
@@ -28,6 +30,6 @@ class Api::V1::UsersController < ApplicationController
 	private
 
 	def users_params
-		params.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, :gender, :blood_type, :address_street, :address_city, :address_province, :contact_info, :avatar, :user_type)
+		params.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :month, :day, :year, :gender, :blood_type, :address_street, :address_city, :address_province, :contact_info, :avatar, :user_type)
 	end
 end
