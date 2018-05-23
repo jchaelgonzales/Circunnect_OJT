@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
-  skip_before_action :require_login, only: [:authenticate_user], raise: false
+  skip_before_action :require_login, only: [:login_user], raise: false
 
   def login_user
     if user = User.valid_login?(params[:username], params[:password])
