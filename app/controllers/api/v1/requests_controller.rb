@@ -5,12 +5,13 @@ class Api::V1::RequestsController < ApplicationController
 		render json: {status: 'SUCCESS', message:'Loaded requests', data:requests}, status: :ok
 	end
 
-	def show
-		request = Request.find(params[:id])
-		render json: {status: 'SUCCESS', message:'Loaded request', data:request}, status: :ok
-	end
+	# def show
+	# 	request = Request.find(params[:id])
+	# 	render json: {status: 'SUCCESS', message:'Loaded request', data:request}, status: :ok
+	# end
 
 	def create
+		request_status = false
 		request = Request.create(request_params)
 
 		if request.save
@@ -39,7 +40,7 @@ class Api::V1::RequestsController < ApplicationController
 	private
 
 	def request_params
-		params.permit(:request_accepted)
+		params.permit(:request_status, :donor_username, :request_username)
 	end
 		
 end
