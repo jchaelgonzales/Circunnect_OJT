@@ -1,9 +1,8 @@
-
 class Api::V1::UsersController < ApplicationController
-	before_action :require_login, only: [:index, :update]
+	before_action :require_login, only: [:update]
 	
 	def index
-		users = User.order('created_at DESC');
+		users = User.order('created_at ASC');
 		render json: users.reload, status: :ok
 	end
 
