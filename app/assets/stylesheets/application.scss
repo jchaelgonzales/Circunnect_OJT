@@ -1,0 +1,179 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* Login */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+  border-color: rgb(140, 0, 0);
+  box-shadow: 0 0 3px #8c0000;
+}
+
+.form-signin input[type="username"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin button[type="submit"] {
+	background-color: #8c0000;
+  border: none;
+}
+
+.form-signin button[type="submit"]:hover {
+	background-color: #8c0000;
+}
+
+.text {
+  position: absolute;
+  color: white;
+  text-shadow: 0px 0px 4px #8c0000;
+  font-size: 34px;
+  font-weight: bold;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wrapper {
+  position: relative;
+}
+
+/* Dashboard */
+
+body {
+  background-color: #f5f5f5;
+  margin:0;
+  padding:0;
+}
+
+.header-login-signup {
+  background-color: #8c0000;
+  padding: 8px;
+  height: 70px;
+}
+
+.header-login-signup .header-limiter {
+  max-width: 1200px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Logo */
+
+.header-login-signup .header-limiter  h1 {
+  float: left;
+  margin: 0;
+}
+
+.header-login-signup .header-limiter  a {
+  color: white;
+  text-decoration: none;
+}
+
+.header-login-signup .header-limiter  ul {
+  float: right;
+  list-style: none;
+}
+
+.header-login-signup .header-limiter  ul li {
+  display: inline-block;
+  padding: 10px 15px;
+}
+
+.header-login-signup .header-limiter  ul li .btn-default:hover {
+  color: #aa0000;
+  background-color: #f5f5f5;
+  border-color: #f0f0f0;
+}
+
+.header-login-signup .header-limiter  ul li .btn-default {
+  color: #8c0000;
+  border-color: white;
+}
+
+/* Content */
+
+.table tbody > tr > td.middle {
+  vertical-align: middle;
+}
+
+.media {
+  padding: 10px 0;
+}
+
+.media img, .fileinput .thumbnail, .thumbnail img {
+  border-radius: 50%;
+}
+
+.media-left {
+  padding: 0 20px;
+}
+
+.media-heading {
+  color: #dd5638;
+  margin-bottom: 10px;
+}
+
+.media-body {
+  padding-top: 15px;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}

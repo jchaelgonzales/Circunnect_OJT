@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_14_175309) do
+ActiveRecord::Schema.define(version: 2018_05_23_023343) do
+
+  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.boolean "request_status"
     t.string "donor_username"
     t.string "request_username"
+    t.string "request_accepted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,7 +43,6 @@ ActiveRecord::Schema.define(version: 2018_05_14_175309) do
     t.string "address_city"
     t.string "address_province"
     t.string "contact_info"
-    t.string "avatar"
     t.string "user_type"
     t.boolean "user_status"
     t.datetime "created_at", null: false

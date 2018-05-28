@@ -1,0 +1,21 @@
+<body class="text-center">
+  <%= form_for(:session, url: login_path, html: {class: "form-signin justify-content-center"}) do |f| %>
+    <%= render 'layouts/alert' %>
+    <%= image_tag "logos/Circunnect_logo.png", size: "175" %>
+    <p class="text">Circunnect</p>
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <%= f.label :username, class: 'sr-only' %>
+    <%= f.text_field :username, type: 'username',
+        class: 'form-control', placeholder: 'Username',
+        autofocus: true, required: true %>
+    <%= f.label :password, class: 'sr-only' %>
+    <%= f.password_field :password, class: 'form-control',
+        placeholder: 'Password', required: true %>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div><br>
+    <%= f.button "Sign in", class: "btn btn-lg btn-primary btn-block" %>
+  <% end %>
+</body>
