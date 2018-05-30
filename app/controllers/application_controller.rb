@@ -29,14 +29,14 @@ class ApplicationController < ActionController::Base
     end
   end  
 
-	helper_method :current_user, :logged_in?
+	helper_method :current_admin, :logged_in?
 
-	def current_user
-		@current_user ||= Admin.find(session[:user_id]) if session[:user_id]
+	def current_admin
+		@current_admin ||= Admin.find(session[:user_id]) if session[:user_id]
 	end
 
 	def logged_in?
-		!!current_user
+		!!current_admin
 	end
 
 	def must_login

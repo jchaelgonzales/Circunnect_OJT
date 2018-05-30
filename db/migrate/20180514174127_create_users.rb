@@ -17,7 +17,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :contact_info
       t.string :avatar
       t.string :user_type
-      t.boolean :user_status
+      t.string :user_status
 
       t.timestamps
     end

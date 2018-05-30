@@ -1,6 +1,16 @@
 <!-- login -->
-<body class="text-center" style="display: flex; padding-bottom: 40px;">
+<body class="text-center" style="display: flex; padding-bottom: 45px;">
   <%= form_for(@admin, url: login_path, html: {class: "form-signin justify-content-center"}) do |f| %>
+    
+    <style type="text/css">
+      .alert {
+        left: 38.5%;
+        width: 23%;
+        top: 50px;
+        padding: 15px;
+      }
+    </style>
+    
     <%= render 'layouts/alert' %>
     <div class="wrapper">
       <%= image_tag "logos/Circunnect_logo.png", size: "175" %>

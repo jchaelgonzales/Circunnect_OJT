@@ -3,5 +3,6 @@ class AdminDashboardController < ApplicationController
 	before_action { flash.clear }
 	
 	def home
+		@users = User.all
 	end
 end

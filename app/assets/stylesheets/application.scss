@@ -127,7 +127,7 @@ body {
 
 .header-login-signup .header-limiter  ul li {
   display: inline-block;
-  padding: 10px 15px;
+  padding: 10px 0;
 }
 
 .header-login-signup .header-limiter  ul li .btn-default:hover {
@@ -156,7 +156,7 @@ body {
 }
 
 .media-left {
-  padding: 0 20px;
+  padding: 2px 20px;
 }
 
 .media-heading {
@@ -176,4 +176,14 @@ body {
   font-size: 12px;
   line-height: 1.428571429;
   border-radius: 15px;
+}
+
+.alert {
+  z-index: 50;
+  position: fixed;
+  top: 40px; 
+  left:25%;
+  width: 50%;
+  padding: 20px;
+  text-align: center;
 }

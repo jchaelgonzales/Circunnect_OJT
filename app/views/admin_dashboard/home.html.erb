@@ -1,3 +1,4 @@
+<!-- <% flash[:success] = "Logged in successfully!" %> -->
 <!-- dashboard -->
 <!-- navbar -->
 <header class="header-login-signup">
@@ -16,7 +17,7 @@
 	</div>
 </header>
 <!-- /.navbar -->
-
+<!-- <%= render 'layouts/alert' %> -->
 <!-- content -->
 <div class="container" style="margin-left: 80px; min-height: 60%; padding-top: 30px;">
 	<div class="row">
@@ -33,62 +34,48 @@
 		<div class="col-md-9">
 			<div class="panel panel-default">
 				<table class="table">
-					<tr>
-						<td class="middle">
-							<div class="media">
-								<div class="media-left">
-									<a href="#">
-										<img class="media-object" src="http://placehold.it/100x100" alt="...">
+
+					<% @users.each do |user| %>
+						<tr>
+							<td class="middle" style="background-color: #2377ff; padding: 15px;">
+								<strong style="font-size: 24px; color: white;">
+									<%= user.blood_type %>
+								</strong>
+							</td>
+							<td class="middle">
+								<div class="media">
+									<div class="media-left">
+										<a href="#">
+											<img class="media-object" src="http://placehold.it/100x100" alt="...">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">
+											<%= user.username %>
+										</h4>
+										<address>
+											<strong>
+												<%= user.address_street %>,&nbsp;
+												<%= user.address_city %>,&nbsp;
+												<%= user.address_province %>
+											</strong><br>
+											<%= user.email %>
+										</address>
+									</div>
+								</div>
+							</td>
+							<td width="100" class="middle">
+								<div>
+									<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
+										<i class="glyphicon glyphicon-edit"></i>
+									</a>
+									<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove">
+										<i class="glyphicon glyphicon-remove"></i>
 									</a>
 								</div>
-								<div class="media-body">
-									<h4 class="media-heading">Donor 1</h4>
-									<address>
-										<strong>Job</strong><br>
-										contact1@sample.com
-									</address>
-								</div>
-							</div>
-						</td>
-						<td width="100" class="middle">
-							<div>
-								<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
-									<i class="glyphicon glyphicon-edit"></i>
-								</a>
-								<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove">
-									<i class="glyphicon glyphicon-remove"></i>
-								</a>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="middle">
-							<div class="media">
-								<div class="media-left">
-									<a href="#">
-										<img class="media-object" src="http://placehold.it/100x100" alt="...">
-									</a>
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">Donor 2</h4>
-									<address>
-										<strong>Job 2</strong><br>
-										contact2@sample.com
-									</address>
-								</div>
-							</div>
-						</td>
-						<td width="100" class="middle">
-							<div>
-								<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
-									<i class="glyphicon glyphicon-edit"></i>
-								</a>
-								<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove">
-									<i class="glyphicon glyphicon-remove"></i>
-								</a>
-							</div>
-						</td>
-					</tr>
+							</td>
+						</tr>
+					<% end %>
 				</table>
 			</div>
 
@@ -113,8 +100,9 @@
 					</ul>
 				</nav>
 			</div>
+			<%= yield %>
+
 		</div>
 	</div>
 <div>
-<%= flash[:success] = "Logged in successfully!" %>
 <%= link_to 'Logout', logout_path, method: :delete %>
