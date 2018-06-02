@@ -8,7 +8,7 @@ class Api::V1::SessionsController < ApplicationController
     		user.regenerate_auth_token
     		render json: { status: 'Success', data:user }, status: :ok
   	else
-        render_unauthorized("Error with your login or password")
+        render json: { status: "Failed" }, status: :unprocessable_entity
     end
   end
 

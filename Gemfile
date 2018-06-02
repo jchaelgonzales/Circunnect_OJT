@@ -15,8 +15,13 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'carrierwave', '~> 1.2', '>= 1.2.2'
+<<<<<<< HEAD
 gem 'rmagick', '~> 2.16'
 #gem 'faker', '~> 1.8', '>= 1.8.7'
+=======
+# gem 'rmagick', '~> 2.16'
+# gem 'faker', '~> 1.8', '>= 1.8.7'
+>>>>>>> f6051af339f223b9e49910421fa5542dd9808dd4
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
