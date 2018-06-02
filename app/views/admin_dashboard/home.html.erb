@@ -3,6 +3,7 @@
 <!-- navbar -->
 <header class="header-login-signup">
 	<div class="header-limiter">
+		<div class="container">
 			<h1>
 				<a href="" title="Circunnect Home"><%= image_tag "logos/Circunnect_logo.png", size: "55" %>Circunnect
 				</a>
@@ -14,16 +15,17 @@
 					</a>
 				</li>
 			</ul>
+		</div>
 	</div>
 </header>
 <!-- /.navbar -->
 <!-- <%= render 'layouts/alert' %> -->
 <!-- content -->
-<div class="container" style="margin-left: 80px; min-height: 60%; padding-top: 30px;">
+<div class="container" style="min-height: 60%; padding-top: 30px;">
 	<div class="row">
 		<div class="col-md-3">
 			<div class="list-group">
-				<a href="" class="list-group-item active">All Contact<span class="badge">10</span></a>
+				<a href="" class="list-group-item active" style="background-color: #af0000; border-color: #af0000;">All Donors<span class="badge"><%= User.count %></span></a>
 				<a href="" class="list-group-item">Family<span class="badge">4</span></a>
 				<a href="" class="list-group-item">Friends<span class="badge">3</span></a>
 				<a href="" class="list-group-item">Other<span class="badge">3</span></a>
@@ -35,46 +37,192 @@
 			<div class="panel panel-default">
 				<table class="table">
 
-					<% @users.each do |user| %>
+					<% @users.order("blood_type").each do |user| %>
 						<tr>
-							<td class="middle" style="background-color: #2377ff; padding: 15px;">
-								<strong style="font-size: 24px; color: white;">
+							<% if user.blood_type == 'O+' %>
+								<td class="middle" style="background-color: #66a0ff; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'O-' %>
+								<td class="middle" style="background-color: #aa0000; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'A+' %>
+								<td class="middle" style="background-color: #64b24e; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'A-' %>
+								<td class="middle" style="background-color: #4b69cc; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'B+' %>
+								<td class="middle" style="background-color: #30a896; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'B-' %>
+								<td class="middle" style="background-color: #db4646; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'AB+' %>
+								<td class="middle" style="background-color: #77c6ff; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% elsif user.blood_type == 'AB-' %>
+								<td class="middle" style="background-color: #3f7f39; padding: 15px; text-align: center;">
+									<strong style="font-size: 24px; color: white;">
+							<% end %>
 									<%= user.blood_type %>
 								</strong>
 							</td>
 							<td class="middle">
 								<div class="media">
 									<div class="media-left">
-										<a href="#">
-											<img class="media-object" src="http://placehold.it/100x100" alt="...">
-										</a>
+										<%= link_to "<img class='media-object' src='http://placehold.it/100x100' alt='...'>".html_safe, '#', data: {toggle: "modal", target: "#profileModal#{ user.id }"} %>
+
 									</div>
 									<div class="media-body">
-										<h4 class="media-heading">
-											<%= user.username %>
-										</h4>
+										<a href="#" data-toggle="modal" data-target="#profileModal<%= user. id %>">
+											<h4 class="media-heading">
+												<strong>
+													<%= user.first_name.titleize %>
+													<%= user.last_name.titleize %>
+												</strong>
+											</h4>
+										</a>
 										<address>
-											<strong>
-												<%= user.address_street %>,&nbsp;
-												<%= user.address_city %>,&nbsp;
-												<%= user.address_province %>
-											</strong><br>
-											<%= user.email %>
+											<%= user.address_street.titleize %>,
+											<%= user.address_city.titleize %>,
+											<%= user.address_province.titleize %><br>
+											<span style="color: #448bff;">
+											<%= user.email %></span>
 										</address>
 									</div>
 								</div>
+							</td>
+							<td class="middle">
+								<!-- Toggle Switch -->
+								<input type="checkbox" class="toggle-switch" title="User Status">
 							</td>
 							<td width="100" class="middle">
 								<div>
 									<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove">
+
+									<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove" data-target="#confirmRemoveModal<%= user.id %>">
 										<i class="glyphicon glyphicon-remove"></i>
 									</a>
 								</div>
 							</td>
 						</tr>
+
+						<!-- Confirm Remove Modal -->
+						<div class="modal fade" id="confirmRemoveModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h3 class="media-heading" id="confirmRemoveModalTitle">
+											<strong>
+												Confirmation
+											</strong>
+											<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
+												<i class="glyphicon glyphicon-edit" style="color: #aa0000;"></i>
+											</a>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+										</h3>
+									</div>
+
+									<div class="modal-body">
+										<label><span>User Status:</span></label>
+											<span style="margin-left: 120px;"><%= user.user_status.capitalize %>
+											</span>
+										<label><span>Blood Type:</span></label>
+											<span style="margin-left: 120px;"><%= user.blood_type.upcase %>
+											</span>
+										<label><span>User Type:</span></label>
+											<span style="margin-left: 120px;"><%= user.user_type.capitalize %>
+											</span>
+										<label><span>Username:</span></label>
+											<span style="margin-left: 120px;"><%= user.username %>
+											</span>
+										<label><span>Email:</span></label>
+											<span style="margin-left: 120px;"><%= user.email %>
+											</span>
+										<label><span>Contact No:</span></label>
+											<span style="margin-left: 120px;"><%= user.contact_info %>
+											</span>
+										<label><span>Address:</span></label>
+											<span style="margin-left: 120px;"><%= user.address_street.titleize %>
+											<%= user.address_city.titleize %>,
+											<%= user.address_province.capitalize %>
+											</span>
+										<label><span>Gender:</span></label>
+											<span style="margin-left: 120px;"><%= user.gender.capitalize %>
+											</span>
+										<label><span>Birthday:</span></label>
+											<span style="margin-left: 120px;"><%= user.month.capitalize %>
+											<%= user.day %>, <%= user.year %>
+											</span>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Profile Modal -->
+						<div class="modal fade" id="profileModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h3 class="media-heading" id="profileModalTitle">
+											<strong>
+												<%= user.first_name.titleize %>
+												<%= user.last_name.titleize %>
+											</strong>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+										</h3>
+									</div>
+
+									<div class="modal-body">
+										<label><span>User Status:</span></label>
+											<span style="margin-left: 120px;"><%= user.user_status.capitalize %>
+											</span>
+										<label><span>Blood Type:</span></label>
+											<span style="margin-left: 120px;"><%= user.blood_type.upcase %>
+											</span>
+										<label><span>User Type:</span></label>
+											<span style="margin-left: 120px;"><%= user.user_type.capitalize %>
+											</span>
+										<label><span>Username:</span></label>
+											<span style="margin-left: 120px;"><%= user.username %>
+											</span>
+										<label><span>Email:</span></label>
+											<span style="margin-left: 120px;"><%= user.email %>
+											</span>
+										<label><span>Contact No:</span></label>
+											<span style="margin-left: 120px;"><%= user.contact_info %>
+											</span>
+										<label><span>Address:</span></label>
+											<span style="margin-left: 120px;"><%= user.address_street.titleize %>
+											<%= user.address_city.titleize %>,
+											<%= user.address_province.capitalize %>
+											</span>
+										<label><span>Gender:</span></label>
+											<span style="margin-left: 120px;"><%= user.gender.capitalize %>
+											</span>
+										<label><span>Birthday:</span></label>
+											<span style="margin-left: 120px;"><%= user.month.capitalize %>
+											<%= user.day %>, <%= user.year %>
+											</span>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					<% end %>
 				</table>
 			</div>

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 	#admin_dashboard
 		root 'admin_dashboard#home'
 		get 'admin/dashboard', to: 'admin_dashboard#home'
+    delete 'admin/dashboard/user/:id', to: 'admin_dashboard#remove_user', as: 'remove_user'
 
   #api
 	namespace 'api' do
