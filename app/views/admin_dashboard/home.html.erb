@@ -1,4 +1,3 @@
-<!-- <% flash[:success] = "Logged in successfully!" %> -->
 <!-- dashboard -->
 <!-- navbar -->
 <header class="header-login-signup">
@@ -19,7 +18,8 @@
 	</div>
 </header>
 <!-- /.navbar -->
-<!-- <%= render 'layouts/alert' %> -->
+<%= render 'layouts/alert' %>
+
 <!-- content -->
 <div class="container" style="min-height: 60%; padding-top: 30px;">
 	<div class="row">
@@ -102,7 +102,7 @@
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
 
-									<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove" data-target="#confirmRemoveModal<%= user.id %>">
+									<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove" data-toggle="modal" data-target="#confirmRemoveModal<%= user.id %>">
 										<i class="glyphicon glyphicon-remove"></i>
 									</a>
 								</div>
@@ -113,55 +113,28 @@
 						<div class="modal fade" id="confirmRemoveModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalTitle" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h3 class="media-heading" id="confirmRemoveModalTitle">
+									<div class="modal-header-remove">
+										<h4 class="media-heading" id="confirmRemoveModalTitle" style="color: white;">
 											<strong>
-												Confirmation
+												Remove <%= user.first_name.titleize %>
+												<%= user.last_name.titleize %>
 											</strong>
-											<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
-												<i class="glyphicon glyphicon-edit" style="color: #aa0000;"></i>
-											</a>
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							          <span aria-hidden="true">&times;</span>
 							        </button>
-										</h3>
+										</h4>
 									</div>
 
 									<div class="modal-body">
-										<label><span>User Status:</span></label>
-											<span style="margin-left: 120px;"><%= user.user_status.capitalize %>
-											</span>
-										<label><span>Blood Type:</span></label>
-											<span style="margin-left: 120px;"><%= user.blood_type.upcase %>
-											</span>
-										<label><span>User Type:</span></label>
-											<span style="margin-left: 120px;"><%= user.user_type.capitalize %>
-											</span>
-										<label><span>Username:</span></label>
-											<span style="margin-left: 120px;"><%= user.username %>
-											</span>
-										<label><span>Email:</span></label>
-											<span style="margin-left: 120px;"><%= user.email %>
-											</span>
-										<label><span>Contact No:</span></label>
-											<span style="margin-left: 120px;"><%= user.contact_info %>
-											</span>
-										<label><span>Address:</span></label>
-											<span style="margin-left: 120px;"><%= user.address_street.titleize %>
-											<%= user.address_city.titleize %>,
-											<%= user.address_province.capitalize %>
-											</span>
-										<label><span>Gender:</span></label>
-											<span style="margin-left: 120px;"><%= user.gender.capitalize %>
-											</span>
-										<label><span>Birthday:</span></label>
-											<span style="margin-left: 120px;"><%= user.month.capitalize %>
-											<%= user.day %>, <%= user.year %>
-											</span>
+										<span>Are you sure you want to remove <%= user.first_name.titleize %> <%= user.last_name.titleize %>?
+										</span>
 									</div>
 
 									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<a href="dashboard/user/<%= user.id %>" data-method="delete" action="remove_user">
+											<button type="button" class="btn btn-danger">Remove User</button>
+										</a>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 									</div>
 								</div>
 							</div>
@@ -185,35 +158,36 @@
 
 									<div class="modal-body">
 										<label><span>User Status:</span></label>
-											<span style="margin-left: 120px;"><%= user.user_status.capitalize %>
-											</span>
+											<p><%= user.user_status.capitalize %>
+											</p>
 										<label><span>Blood Type:</span></label>
-											<span style="margin-left: 120px;"><%= user.blood_type.upcase %>
-											</span>
+											<p><%= user.blood_type.upcase %>
+											</p>
 										<label><span>User Type:</span></label>
-											<span style="margin-left: 120px;"><%= user.user_type.capitalize %>
-											</span>
+											<p><%= user.user_type.capitalize %>
+											</p>
 										<label><span>Username:</span></label>
-											<span style="margin-left: 120px;"><%= user.username %>
-											</span>
+											<p><%= user.username %>
+											</p>
 										<label><span>Email:</span></label>
-											<span style="margin-left: 120px;"><%= user.email %>
-											</span>
+											<p><%= user.email %>
+											</p>
 										<label><span>Contact No:</span></label>
-											<span style="margin-left: 120px;"><%= user.contact_info %>
-											</span>
+											<p><%= user.contact_info %>
+											</p>
 										<label><span>Address:</span></label>
-											<span style="margin-left: 120px;"><%= user.address_street.titleize %>
+											<p><%= user.address_street.titleize %>
 											<%= user.address_city.titleize %>,
 											<%= user.address_province.capitalize %>
-											</span>
+											abcdefghijklmnop
+											</p>
 										<label><span>Gender:</span></label>
-											<span style="margin-left: 120px;"><%= user.gender.capitalize %>
-											</span>
+											<p><%= user.gender.capitalize %>
+											</p>
 										<label><span>Birthday:</span></label>
-											<span style="margin-left: 120px;"><%= user.month.capitalize %>
+											<p><%= user.month.capitalize %>
 											<%= user.day %>, <%= user.year %>
-											</span>
+											</p>
 									</div>
 
 									<div class="modal-footer">

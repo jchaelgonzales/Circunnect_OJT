@@ -151,7 +151,7 @@ body {
   border-radius: 60%;
 }
 
-a:focus, a:hover {
+a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus {
   outline: none;
   text-decoration: none;
 }
@@ -196,6 +196,10 @@ a:focus, a:hover {
   padding: 0!important;
 }
 
+.modal-header {
+  padding-bottom: 5px;
+}
+
 .modal:before {
   content: '';
   display: inline-block;
@@ -205,7 +209,7 @@ a:focus, a:hover {
 
 .modal-dialog {
   top: 15%;
-  width: 35%;
+  width: 450px;
   display: inline-block;
   text-align: left;
   vertical-align: middle;
@@ -214,13 +218,30 @@ a:focus, a:hover {
 .modal-body label {
   display: block;
   position: relative;
+  margin-bottom: 0;
 }
 
 .modal-body label span {
-  top: 4px;
   position: absolute;
   left: 5px;
 }
+
+.modal-body p {
+  margin-left: 120px;
+  margin-bottom: 2px;
+}
+
+/* Confirm Remove Modal */
+
+.modal-header-remove {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: crimson;
+  padding: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
 
 /* Toggle Switch */
 
@@ -261,7 +282,7 @@ input[type=checkbox].toggle-switch:checked::after {
   left: 3em;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 400px) {
   .media-left {
     padding: 2px 8px;
     vertical-align: middle;

@@ -8,6 +8,10 @@ class AdminDashboardController < ApplicationController
 
 	def remove_user
 		@user = User.find(params[:id])
-		@user.destroy
+
+		if @user.destroy
+			flash[:success] = "User removed succesfully!"
+		end
+		redirect_to admin_dashboard_path
 	end
 end
