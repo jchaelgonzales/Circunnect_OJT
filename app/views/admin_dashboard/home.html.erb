@@ -1,16 +1,756 @@
+<!-- Modals -->
+<% @users.order("blood_type").each do |user| %>
+	<!-- Change User Status Modal -->
+	<div class="modal fade" id="changeUserStatusModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="changeUserStatusModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="media-heading" id="changeUserStatusModalTitle" style="color: white;">
+						<strong>
+							Change User Status
+						</strong>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+					</h4>
+				</div>
+
+				<div class="modal-body">
+					<span>
+						<% if user.user_status == "Inactive" %>
+							Are you sure you want to activate <%= user.first_name.titleize %> <%= user.last_name.titleize %>?
+						<% else %>
+							Are you sure you want to deactivate <%= user.first_name.titleize %> <%= user.last_name.titleize %>?
+						<% end %>
+					</span>
+				</div>
+
+				<div class="modal-footer">
+					<a href="dashboard/user/<%= user.id %>" data-method="post" action="change_status">
+						<button type="button" class="btn btn-danger">Change Status</button>
+					</a>
+					<a href="<%= admin_dashboard_path %>" data-method="get" action="home">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: #333333;">Cancel</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Confirm Remove Modal -->
+	<div class="modal fade" id="confirmRemoveModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header-remove">
+					<h4 class="media-heading" id="confirmRemoveModalTitle" style="color: white;">
+						<strong>
+							Remove <%= user.first_name.titleize %>
+							<%= user.last_name.titleize %>
+						</strong>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+					</h4>
+				</div>
+
+				<div class="modal-body">
+					<span>Are you sure you want to remove <%= user.first_name.titleize %> <%= user.last_name.titleize %>?
+					</span>
+				</div>
+
+				<div class="modal-footer">
+					<a href="dashboard/user/<%= user.id %>" data-method="delete" action="remove_user">
+						<button type="button" class="btn btn-danger">Remove User</button>
+					</a>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Profile Modal -->
+	<div class="modal fade" id="profileModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="media-heading" id="profileModalTitle" style="color: white;">
+						<strong>User Profile</strong>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+					</h4>
+				</div>
+
+				<div class="modal-body" id="profileDataModal">
+					<div class="row">
+						<table class="table">
+							<tr id="profileData">
+								<td rowspan="9" width="215px">
+									<div class="col-sm-4">
+										<img class='media-object' src='http://placehold.it/140x140' alt='...'>
+										<h4 style="color: #aa0000; margin: 0;"><strong>
+											<%= user.first_name.titleize %>
+											<%= user.last_name.titleize %>
+										</strong></h4>
+										<%= user.username %>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="105px">
+									<label>
+										User Status:
+									</label>
+								</td>
+								<td>
+									<%= user.user_status.capitalize %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										User Type:
+									</label>
+								</td>
+								<td>
+									<%= user.user_type.capitalize %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										Blood Type:
+									</label>
+								</td>
+								<td>
+									<%= user.blood_type.upcase %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										Email:
+									</label>
+								</td>
+								<td>
+									<%= user.email %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										Phone Number:
+									</label>
+								</td>
+								<td>
+									<%= user.contact_info %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										Address:
+									</label>
+								</td>
+								<td>
+									<%= user.address_street.titleize %>,
+									<%= user.address_city.titleize %>,
+									<%= user.address_province.capitalize %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										Gender:
+									</label>
+								</td>
+								<td>
+									<%= user.gender.capitalize %>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										Birthday:
+									</label>
+								</td>
+								<td>
+									<%= user.month.capitalize %>
+									<%= user.day %>, <%= user.year %>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add Donor Form Modal -->
+	<div class="modal fade" id="addDonorFormModal" tabindex="-1" role="dialog" aria-labelledby="addDonorFormModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<%= form_for(@user, url: create_user_path, html: {id: 'addDonorForm', role: 'form'}, data: {toggle: 'validator'}) do %>
+					<div class="modal-header">
+						<h4 class="media-heading" id="addDonorFormModalTitle" style="color: white;">
+							<strong>
+								Add New User
+							</strong>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+						</h4>
+					</div>
+
+					<div class="modal-body">
+						<div class="row custom-row">
+							<div id="photo" class="form-group">
+								<div class="circle-dotted">
+									<img class='media-object' src='http://placehold.it/140x140' alt='...'>
+								</div>
+								<button type="button" class="btn btn-secondary" style="margin-top: 20px;">
+								<i class="glyphicon glyphicon-upload"  style="margin-right: 4px;"></i>
+									Choose Photo
+								</button>
+							</div>
+							<div class="form-group custom-form-group">
+						    <label for="usertype" class="control-label">User Type</label>
+						    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+								  <label class="btn btn-secondary active">
+								    <input class="form-control" type="radio" name="usertype" value="Donor" checked>Donor
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="usertype" value="Finder">Finder
+								  </label>
+								</div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="bloodtype" class="control-label">Blood Type</label>
+						    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+								  <label class="btn btn-secondary active">
+								    <input class="form-control" type="radio" name="bloodtype" value="A-" checked>A-
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="usertype" value="A+">A+
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="usertype" value="B+">B+
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="usertype" value="O+">O+
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+								  </label>
+								</div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="firstname" class="control-label">Name</label>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						        <input name="firstname" type="text" class="form-control" placeholder="First name" autocomplete="off" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						        <input name="lastname" type="text" class="form-control" placeholder="Last name" autocomplete="off" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <div class="form-inline row custom-inline-row">
+						      <div id="username-form" class="form-group custom-form-group col-xs-3 custom-col">
+						      	<label for="username" class="control-label">Username</label>
+						        <input id="username" name="username" type="text" class="form-control" placeholder="Username" autocomplete="off" onkeyup="check_username()" required>
+						        <div id="user-exist" class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						      	<label for="email" class="control-label">Email</label>
+						        <input name="email" type="email" class="form-control" placeholder="Email" autocomplete="off" data-error="That email address is invalid" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						      	<label for="password" class="control-label">Password</label>
+						        <input name="password" id="password" type="password" class="form-control" placeholder="Password" data-minlength="8" required>
+						        <div class="help-block custom-with-errors">
+						        	Minimum of 8 characters
+						        </div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						      	<label for="confpassword" class="control-label">Confirm Password</label>
+						        <input name="confpassword" type="password" class="form-control" placeholder="Confirm" data-match="#password" data-match-error="These passwords don't match" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						  	<label for="street" class="control-label">Home Address</label>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						      	<input name="street" type="text" class="form-control" placeholder="Street" autocomplete="off" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col">
+						      	<input name="city" type="text" class="form-control" placeholder="City" autocomplete="off" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-6 custom-col">
+								    <input id="province" name="province" type="text" class="form-control" placeholder="Province" autocomplete="off" required>
+							    	<div class="help-block with-errors custom-with-errors"></div>
+							    </div>
+							  </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						  	<label for="contactno" class="control-label">Phone Number</label>
+						  	<input id="contactno" name="contactno" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpaste="return false;" class="form-control" placeholder="Phone Number" autocomplete="off" maxlength="11" data-minlength="11" data-minlength-error="That phone number is invalid" required>
+						  	<div class="help-block with-errors custom-with-errors"></div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="gender" class="control-label">Gender</label>
+						    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+								  <label class="btn btn-secondary active">
+								    <input class="form-control" type="radio" name="gender" value="Male" checked>Male
+								  </label>
+								  <label class="btn btn-secondary">
+								    <input class="form-control" type="radio" name="gender" value="Female">Female
+								  </label>
+								</div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="birthday" class="control-label">Birthday</label>
+						    <input id="birthday" name="birthday" type="date" class="form-control" required>
+						    <div class="help-block with-errors custom-with-errors"></div>
+						  </div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Add User</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+	<!-- Edit Donor Form Modal -->
+	<div class="modal fade" id="editDonorFormModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="editDonorFormModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document" style="top: 5px; width: 700px;">
+			<div class="modal-content">
+				<%= form_for(@user, url: create_user_path, html: {id: 'editDonorForm', role: 'form'}, data: {toggle: 'validator'}) do %>
+					<div class="modal-header" style="background-color: #aa0000;">
+						<h4 class="media-heading" id="addDonorFormModalTitle" style="color: white;">
+							<strong>
+								Add New User
+							</strong>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+						</h4>
+					</div>
+
+					<div class="modal-body" style="padding-bottom: 27px;">
+						<div class="row custom-row">
+							<div id="photo" class="form-group">
+								<div class="circle-dotted">
+									<img class='media-object' src='http://placehold.it/140x140' alt='...'>
+								</div>
+								<button type="button" class="btn btn-secondary" style="margin-top: 20px;">
+								<i class="glyphicon glyphicon-upload"  style="margin-right: 4px;"></i>
+									Choose Photo
+								</button>
+							</div>
+							<div class="form-group custom-form-group">
+						    <label for="usertype" class="control-label">User Type</label>
+						    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+						    	<% if user.user_type == 'Donor' %>
+						    		<label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="usertype" value="Donor" checked>Donor
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="Finder">Finder
+									  </label>
+									<% else %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="Donor">Donor
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="usertype" value="Finder" checked>Finder
+									  </label>
+						    	<% end %>
+								</div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="bloodtype" class="control-label">Blood Type</label>
+						    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+						    	<% if user.blood_type == 'A-' %>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-" checked>A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'A+' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="usertype" value="A+" checked>A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'B-' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-" checked>B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'B+' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="usertype" value="B+" checked>B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'O-' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-" checked>O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'O+' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="usertype" value="O+" checked>O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'AB-' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-" checked>AB-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="AB+">AB+
+									  </label>
+									<% elsif user.blood_type == 'AB+' %>
+										<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="A-">A-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="A+">A+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="B-">B-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="B+">B+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="O-">O-
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="usertype" value="O+">O+
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="bloodtype" value="AB-">AB-
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="usertype" value="AB+" checked>AB+
+									  </label>
+									<% end %>
+								</div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="firstname" class="control-label">Name</label>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						        <input name="firstname" type="text" class="form-control" placeholder="First name" autocomplete="off" style="width: 195px;" value="<%= user.first_name %>" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						        <input name="lastname" type="text" class="form-control" placeholder="Last name" autocomplete="off" style="width: 195px;" value="<%= user.last_name %>" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <div class="form-inline row custom-inline-row">
+						      <div id="username-form" class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<label for="username" class="control-label">Username</label>
+						        <input id="username" name="username" type="text" class="form-control" placeholder="Username" autocomplete="off" onkeyup="check_username()" style="width: 195px;" value="<%= user.username %>" required>
+						        <div id="user-exist" class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<label for="email" class="control-label">Email</label>
+						        <input name="email" type="email" class="form-control" placeholder="Email" autocomplete="off" data-error="That email address is invalid" style="width: 195px;" value="<%= user.email %>" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						  	<div class="form-group custom-form-group col-xs-6 custom-col" style="padding-left: 0; padding-right: 10px;">
+							    <label for="currpassword" class="control-label">Current Password</label>
+				        	<input name="currpassword" id="currpassword" type="password" class="form-control" placeholder="Current Password">
+						    	<div class="help-block with-errors custom-with-errors"></div>
+						    </div>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<label for="password" class="control-label">New Password</label>
+						        <input name="password" id="password" type="password" class="form-control" placeholder="New Password" data-minlength="8" style="width: 195px;">
+						        <div class="help-block custom-with-errors">
+						        	Minimum of 8 characters
+						        </div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<label for="confpassword" class="control-label">Confirm Password</label>
+						        <input name="confpassword" type="password" class="form-control" placeholder="Confirm" data-match="#password" data-match-error="These passwords don't match" style="width: 195px;">
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						  	<label for="street" class="control-label">Home Address</label>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<input name="street" type="text" class="form-control" placeholder="Street" autocomplete="off" style="width: 195px;" value="<%= user.address_street %>" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<input name="city" type="text" class="form-control" placeholder="City" autocomplete="off" style="width: 195px;" value="<%= user.address_city %>" required>
+						        <div class="help-block with-errors custom-with-errors"></div>
+						      </div>
+						    </div>
+						    <div class="form-inline row custom-inline-row">
+						      <div class="form-group custom-form-group col-xs-6 custom-col" style="padding-left: 0; padding-right: 10px;">
+								    <input id="province" name="province" type="text" class="form-control" placeholder="Province" autocomplete="off" value="<%= user.address_province %>" required>
+							    	<div class="help-block with-errors custom-with-errors"></div>
+							    </div>
+							  </div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						  	<label for="contactno" class="control-label">Phone Number</label>
+						  	<input id="contactno" name="contactno" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpaste="return false;" class="form-control" placeholder="Phone Number" autocomplete="off" maxlength="11" data-minlength="11" data-minlength-error="That phone number is invalid" value="<%= user.contact_info %>" required>
+						  	<div class="help-block with-errors custom-with-errors"></div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="gender" class="control-label">Gender</label>
+						    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+						    	<% if user.gender == 'Male' %>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="gender" value="Male" checked>Male
+									  </label>
+									  <label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="gender" value="Female">Female
+									  </label>
+								  <% else %>
+								  	<label class="btn btn-secondary">
+									    <input class="form-control" type="radio" name="gender" value="Male">Male
+									  </label>
+									  <label class="btn btn-secondary active">
+									    <input class="form-control" type="radio" name="gender" value="Female" checked>Female
+									  </label>
+									<% end %>
+								</div>
+						  </div>
+						  <div class="form-group custom-form-group">
+						    <label for="birthday" class="control-label">Birthday</label>
+						    <% @date = Date.parse(user.month+'/'+user.day+'/'+user.year).strftime('%Y-%m-%d') %>
+						    <input id="birthday" name="birthday" type="date" class="form-control" value="<%= @date %>" required>
+						    <div class="help-block with-errors custom-with-errors"></div>
+						  </div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save Changes</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+  <script>
+  	/* Reset Form Fields */
+    $('#addDonorFormModal').on('hidden.bs.modal', function(){
+      $(this).find('#addDonorForm')[0].reset();
+    });
+    $('#changeUserStatusModal<%= user.id %>').on('hidden.bs.modal', function(){
+      window.location.reload();
+    });
+    /* Check Username Existence */
+    function check_username(){
+    	var usernames = gon.usernames;
+    	for (var i = 0; i < usernames.length; i++) {
+    		if (usernames[i] == document.getElementById('username').value) {
+    			document.getElementById('user-exist').innerHTML = 'Username already exists';
+    			document.getElementById('username-form').classList.add('has-error','has-danger');
+    			break;
+    		} else {
+    			document.getElementById('user-exist').innerHTML = '';
+    		}
+    	}
+    }
+  </script>
+<% end %>
+
 <!-- dashboard -->
 <!-- navbar -->
 <header class="header-login-signup">
 	<div class="header-limiter">
 		<div class="container">
 			<h1>
-				<a href="" title="Circunnect Home"><%= image_tag "logos/Circunnect_logo.png", size: "55" %>Circunnect
+				<a href="<% admin_dashboard_path %>" title="Circunnect Home" data-method="get"><%= image_tag "logos/Circunnect_logo.png", size: "55" %>Circunnect
 				</a>
 			</h1>
 			<ul>
 				<li>
-					<a href="#" class="btn btn-default">
-						<i class="glyphicon glyphicon-plus"  style="margin-right: 4px;"></i>Add Donors
+					<a href="" class="btn btn-default" data-toggle="modal" data-target="#addDonorFormModal">
+						<i class="glyphicon glyphicon-plus"  style="margin-right: 4px;"></i>Add User
 					</a>
 				</li>
 			</ul>
@@ -18,14 +758,12 @@
 	</div>
 </header>
 <!-- /.navbar -->
-<%= render 'layouts/alert' %>
-
 <!-- content -->
 <div class="container" style="min-height: 60%; padding-top: 30px;">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-xs-3">
 			<div class="list-group">
-				<a href="" class="list-group-item active" style="background-color: #af0000; border-color: #af0000;">All Donors<span class="badge"><%= User.count %></span></a>
+				<a href="" class="list-group-item active" style="background-color: #af0000; border-color: #af0000;">All Users<span class="badge"><%= User.count %></span></a>
 				<a href="" class="list-group-item">Family<span class="badge">4</span></a>
 				<a href="" class="list-group-item">Friends<span class="badge">3</span></a>
 				<a href="" class="list-group-item">Other<span class="badge">3</span></a>
@@ -33,7 +771,7 @@
 		</div>
 		<!-- /.col-md-3 -->
 
-		<div class="col-md-9">
+		<div class="col-xs-9">
 			<div class="panel panel-default">
 				<table class="table">
 
@@ -70,12 +808,13 @@
 							<td class="middle">
 								<div class="media">
 									<div class="media-left">
-										<%= link_to "<img class='media-object' src='http://placehold.it/100x100' alt='...'>".html_safe, '#', data: {toggle: "modal", target: "#profileModal#{ user.id }"} %>
-
+										<a href="" data-toggle="modal" data-target="#profileModal<%= user.id %>">
+											<img class='media-object' src='http://placehold.it/100x100' alt='...'>
+										</a>
 									</div>
 									<div class="media-body">
-										<a href="#" data-toggle="modal" data-target="#profileModal<%= user. id %>">
-											<h4 class="media-heading">
+										<a href="" data-toggle="modal" data-target="#profileModal<%= user. id %>">
+											<h4 class="media-heading" style="display: inline-block;">
 												<strong>
 													<%= user.first_name.titleize %>
 													<%= user.last_name.titleize %>
@@ -94,137 +833,37 @@
 							</td>
 							<td class="middle">
 								<!-- Toggle Switch -->
-								<input type="checkbox" class="toggle-switch" title="User Status">
+								<% if user.user_status == "Inactive" %>
+									<input type="checkbox" class="toggle-switch" title="<%= user.user_status %>" data-toggle="modal" data-target="#changeUserStatusModal<%= user.id %>">
+								<% else %>
+									<input type="checkbox" class="toggle-switch" title="<%= user.user_status %>" data-toggle="modal" data-target="#changeUserStatusModal<%= user.id %>" checked>
+								<% end %>
 							</td>
 							<td width="100" class="middle">
 								<div>
-									<a href="#" class="btn btn-circle btn-default btn-xs" title="Edit">
+									<a href="" class="btn btn-circle btn-default btn-xs" title="Edit" data-toggle="modal" data-target="#editDonorFormModal<%= user.id %>">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
 
-									<a href="#" class="btn btn-circle btn-danger btn-xs" title="Remove" data-toggle="modal" data-target="#confirmRemoveModal<%= user.id %>">
+									<a href="" class="btn btn-circle btn-danger btn-xs" title="Remove" data-toggle="modal" data-target="#confirmRemoveModal<%= user.id %>">
 										<i class="glyphicon glyphicon-remove"></i>
 									</a>
 								</div>
 							</td>
 						</tr>
-
-						<!-- Confirm Remove Modal -->
-						<div class="modal fade" id="confirmRemoveModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalTitle" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content">
-									<div class="modal-header-remove">
-										<h4 class="media-heading" id="confirmRemoveModalTitle" style="color: white;">
-											<strong>
-												Remove <%= user.first_name.titleize %>
-												<%= user.last_name.titleize %>
-											</strong>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-										</h4>
-									</div>
-
-									<div class="modal-body">
-										<span>Are you sure you want to remove <%= user.first_name.titleize %> <%= user.last_name.titleize %>?
-										</span>
-									</div>
-
-									<div class="modal-footer">
-										<a href="dashboard/user/<%= user.id %>" data-method="delete" action="remove_user">
-											<button type="button" class="btn btn-danger">Remove User</button>
-										</a>
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Profile Modal -->
-						<div class="modal fade" id="profileModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h3 class="media-heading" id="profileModalTitle">
-											<strong>
-												<%= user.first_name.titleize %>
-												<%= user.last_name.titleize %>
-											</strong>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-										</h3>
-									</div>
-
-									<div class="modal-body">
-										<label><span>User Status:</span></label>
-											<p><%= user.user_status.capitalize %>
-											</p>
-										<label><span>Blood Type:</span></label>
-											<p><%= user.blood_type.upcase %>
-											</p>
-										<label><span>User Type:</span></label>
-											<p><%= user.user_type.capitalize %>
-											</p>
-										<label><span>Username:</span></label>
-											<p><%= user.username %>
-											</p>
-										<label><span>Email:</span></label>
-											<p><%= user.email %>
-											</p>
-										<label><span>Contact No:</span></label>
-											<p><%= user.contact_info %>
-											</p>
-										<label><span>Address:</span></label>
-											<p><%= user.address_street.titleize %>
-											<%= user.address_city.titleize %>,
-											<%= user.address_province.capitalize %>
-											abcdefghijklmnop
-											</p>
-										<label><span>Gender:</span></label>
-											<p><%= user.gender.capitalize %>
-											</p>
-										<label><span>Birthday:</span></label>
-											<p><%= user.month.capitalize %>
-											<%= user.day %>, <%= user.year %>
-											</p>
-									</div>
-
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
-						</div>
-
 					<% end %>
 				</table>
 			</div>
 
 			<div class="text-center">
-				<nav>
-					<ul class="pagination">
-						<li>
-							<a href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li>
-							<a href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+				<%= will_paginate @users %>
 			</div>
-			<%= yield %>
 
 		</div>
 	</div>
 <div>
 <%= link_to 'Logout', logout_path, method: :delete %>
+
+<!-- bootstrap-validator-plugin -->
+<script src="http://1000hz.github.io/bootstrap-validator/dist/validator.min.js"></script>
+<script src="http://1000hz.github.io/bootstrap-validator/assets/js/application.js"></script>

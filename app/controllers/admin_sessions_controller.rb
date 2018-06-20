@@ -17,13 +17,13 @@ class AdminSessionsController < ApplicationController
   end
 
   def destroy
-  	@current_user = session[:user_id] = nil
+  	@current_admin = session[:user_id] = nil
   	redirect_to login_path
-  	flash[:success] = "Logged out succesfully!"
+  	flash[:success] = "Logged out successfully!"
   end
 
   private
 	  def check_session
-		  redirect_to root_path unless current_user.blank?
+		  redirect_to root_path unless current_admin.blank?
 		end
 end

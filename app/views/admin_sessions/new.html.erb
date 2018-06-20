@@ -1,19 +1,5 @@
-<style>
-  .alert {
-    left: 38.5%;
-    width: 23%;
-    top: 50px;
-    padding: 15px;
-  }
-
-  body {
-    display: flex;
-    padding-bottom: 45px;
-  }
-</style>
-
 <!-- login -->
-<body class="text-center">
+<body class="text-center login-body">
   <%= form_for(@admin, url: login_path, html: {class: "form-signin justify-content-center"}) do |f| %>
     
     <%= render 'layouts/alert' %>
@@ -23,7 +9,7 @@
     </div>
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <%= f.label :username, class: 'sr-only' %>
-    <%= f.text_field :username, type: 'username',
+    <%= f.text_field :username, type: 'text',
         class: 'form-control', placeholder: 'Username',
         autofocus: true, autocomplete: 'off', required: true %>
     <%= f.label :password, class: 'sr-only' %>

@@ -7,8 +7,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :first_name
       t.string :last_name
       t.string :month
-      t.integer :day
-      t.integer :year
+      t.string :day
+      t.string :year
       t.string :gender
       t.string :blood_type
       t.string :address_street

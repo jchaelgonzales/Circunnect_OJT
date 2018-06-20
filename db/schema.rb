@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(version: 2018_05_23_023343) do
     t.string "password_digest"
     t.string "first_name"
     t.string "last_name"
-    t.string "month"
-    t.integer "day"
-    t.integer "year"
     t.string "gender"
+    t.string "month", limit: 10
+    t.string "day", limit: 2
+    t.string "year", limit: 15
     t.string "blood_type"
     t.string "address_street"
     t.string "address_city"

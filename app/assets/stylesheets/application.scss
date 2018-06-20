@@ -12,7 +12,7 @@
  *
  *= require_tree .
  *= require_self
- */
+*/
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -24,10 +24,25 @@ body {
 }
 
 body {
+  min-width: 1024px;
   display: -ms-flexbox;
   -ms-flex-align: center;
   align-items: center;
   background-color: #f5f5f5;
+}
+
+.login-body {
+  display: flex;
+  padding-bottom: 45px;
+}
+
+.alert {
+  left: 38.5%;
+  width: 23%;
+  top: 50px;
+  padding: 15px;
+  position: fixed;
+  text-align: center;
 }
 
 .form-signin {
@@ -46,13 +61,13 @@ body {
   font-size: 16px;
 }
 
-.form-signin .form-control:focus {
+.form-control:focus {
   z-index: 2;
   border-color: rgb(140, 0, 0);
   box-shadow: 0 0 3px #8c0000;
 }
 
-.form-signin input[type="username"] {
+.form-signin input[type="text"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -65,12 +80,12 @@ body {
 }
 
 .form-signin button[type="submit"] {
-	background-color: #8c0000;
+  background-color: #8c0000;
   border: none;
 }
 
 .form-signin button[type="submit"]:hover {
-	background-color: #8c0000;
+  background-color: #8c0000;
 }
 
 .text {
@@ -92,8 +107,7 @@ body {
 
 body {
   background-color: #f5f5f5;
-  margin:0;
-  padding:0;
+  padding: 0;
 }
 
 .header-login-signup {
@@ -143,21 +157,29 @@ body {
 
 /* Content */
 
+.container .row {
+  margin-left: -10px;
+}
+
 .table tbody > tr > td.middle {
   vertical-align: middle;
 }
 
-.media img, .fileinput .thumbnail, .thumbnail img {
+.media img, .fileinput .thumbnail, .thumbnail img, .media-object {
   border-radius: 60%;
 }
 
-a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus {
+a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus, .btn:focus, .btn.active:focus, .btn.active.focus, .btn:focus, .btn.focus, .btn:active:focus, .btn:active.focus {
   outline: none;
   text-decoration: none;
 }
 
+.header-login-signup .header-limiter .container ul li .btn-default:focus {
+  background-color: white;
+}
+
 .media-left {
-  padding: 2px 20px;
+  padding: 2px 8px;
 }
 
 .media-heading {
@@ -167,6 +189,7 @@ a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus {
 
 .media-body {
   padding-top: 15px;
+  padding-left: 8px;
 }
 
 .btn-circle {
@@ -179,25 +202,41 @@ a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus {
   border-radius: 15px;
 }
 
-.alert {
-  z-index: 50;
-  position: fixed;
-  top: 40px; 
-  left:25%;
-  width: 50%;
-  padding: 20px;
-  text-align: center;
+/* Modal */
+
+.close {
+  font-size: 25px;
+  opacity: 1;
+  text-shadow: none;
+  color: #ffefef;
 }
 
-/* Modal */
+.close:hover {
+  opacity: 1;
+  color: #eddede;
+}
+
+.media-heading strong {
+  vertical-align: middle;
+}
 
 .modal {
   text-align: center;
   padding: 0!important;
 }
 
+.modal-open .modal {
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.modal-content {
+  overflow: hidden;
+}
+
 .modal-header {
   padding-bottom: 5px;
+  background-color: #aa0000;
 }
 
 .modal:before {
@@ -208,7 +247,7 @@ a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus {
 }
 
 .modal-dialog {
-  top: 15%;
+  top: 5%;
   width: 450px;
   display: inline-block;
   text-align: left;
@@ -217,31 +256,160 @@ a:focus, a:hover, .btn-circle:focus, .btn-circle:active, .btn-default:focus {
 
 .modal-body label {
   display: block;
-  position: relative;
   margin-bottom: 0;
+  padding-bottom: 5px;
 }
 
-.modal-body label span {
-  position: absolute;
-  left: 5px;
+.modal-body .col-sm-4 {
+  width: auto;
+  text-align: center;
 }
 
-.modal-body p {
-  margin-left: 120px;
-  margin-bottom: 2px;
+.modal-body .col-sm-6 {
+  width: auto;
+  padding-top: 10px;
+  padding-right: 0;
+}
+
+#profileDataModal img {
+  padding: 10px 20px 10px 20px;
+}
+
+#profileDataModal td, #addDonorFormModal td {
+  border-top: none;
+}
+
+#profileDataModal td {
+  padding: 10px 0 0 0;
+}
+
+#profileDataModal tr:nth-child(3) td,
+#profileDataModal tr:nth-child(4) td,
+#profileDataModal tr:nth-child(5) td,
+#profileDataModal tr:nth-child(6) td,
+#profileDataModal tr:nth-child(7) td,
+#profileDataModal tr:nth-child(8) td,
+#profileDataModal tr:nth-child(9) td {
+  padding-top: 0;
+}
+
+#profileDataModal tr:nth-child(2) td:first-child,
+#profileDataModal tr:nth-child(3) td:first-child,
+#profileDataModal tr:nth-child(4) td:first-child,
+#profileDataModal tr:nth-child(5) td:first-child,
+#profileDataModal tr:nth-child(6) td:first-child,
+#profileDataModal tr:nth-child(7) td:first-child,
+#profileDataModal tr:nth-child(8) td:first-child,
+#profileDataModal tr:nth-child(9) td:first-child {
+  text-align: right;
+}
+
+#profileDataModal tr:nth-child(2) td:nth-child(2),
+#profileDataModal tr:nth-child(3) td:nth-child(2),
+#profileDataModal tr:nth-child(4) td:nth-child(2),
+#profileDataModal tr:nth-child(5) td:nth-child(2),
+#profileDataModal tr:nth-child(6) td:nth-child(2),
+#profileDataModal tr:nth-child(7) td:nth-child(2),
+#profileDataModal tr:nth-child(8) td:nth-child(2),
+#profileDataModal tr:nth-child(9) td:nth-child(2) {
+  padding-left: 15px;
+  padding-right: 30px;
+}
+
+#profileDataModal.modal-body {
+  padding-bottom: 0;
+}
+
+#profileData td:first-child {
+  padding-top: 0;
 }
 
 /* Confirm Remove Modal */
 
 .modal-header-remove {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background-color: crimson;
+  background-color: #aa0000;
   padding: 15px;
   padding-bottom: 5px;
   border-bottom: 1px solid #e5e5e5;
 }
 
+/* Add Donor Form Modal */
+
+.btn-secondary:hover {
+  background-color: #cecece;
+}
+
+#addDonorFormModal .modal-body {
+  padding-bottom: 27px;
+}
+
+#addDonorFormModal .modal-dialog {
+  top: 5px;
+  width: 700px;
+}
+
+#addDonorFormModal .modal-header {
+  background-color: #aa0000;
+}
+
+.btn-primary {
+  background-color: #aa0000;
+  border-color: #aa0000;
+}
+
+.btn-primary:hover {
+  background-color: #8c0000;
+  border-color: #8c0000;
+}
+
+#addDonorFormModal .custom-col {
+  padding-left: 0;
+  padding-right: 10px;
+  width: 205px;
+}
+
+#addDonorFormModal input[type=text], #addDonorFormModal input[type=email], #addDonorFormModal input[type=password] {
+  width: 195px;
+}
+
+.custom-row {
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 650px;
+}
+
+.custom-inline-row {
+  margin-left: 0;
+}
+
+.custom-form-group {
+  width: 400px;
+  margin-bottom: 5px;
+}
+
+.custom-with-errors {
+  font-size: 13px;
+}
+
+input[type=password]#currpassword, input[type=text]#province, input[type=text]#contactno, input[type=date]#birthday {
+  width: 400px;
+}
+
+.form-group#photo {
+  text-align: center;
+  top: 40px;
+  right: 60px;
+  position: absolute;
+}
+
+.circle-dotted {
+  border: 2px dotted #bec2c9;
+  border-radius: 50%;
+  box-sizing: border-box;
+  padding: 2px 2px;
+  height: 148px;
+  width: 148px;
+}
 
 /* Toggle Switch */
 
@@ -280,11 +448,4 @@ input[type=checkbox].toggle-switch::after {
 
 input[type=checkbox].toggle-switch:checked::after {
   left: 3em;
-}
-
-@media only screen and (min-width: 400px) {
-  .media-left {
-    padding: 2px 8px;
-    vertical-align: middle;
-  }
 }
