@@ -355,11 +355,11 @@
 	<div class="modal fade" id="editDonorFormModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="editDonorFormModalTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document" style="top: 5px; width: 700px;">
 			<div class="modal-content">
-				<%= form_for(@user, url: create_user_path, html: {id: 'editDonorForm', role: 'form'}, data: {toggle: 'validator'}) do %>
+				<%= form_for(@user, url: edit_user_path(user.id), html: {id: 'editDonorForm', role: 'form'}, data: {toggle: 'validator'}) do %>
 					<div class="modal-header" style="background-color: #aa0000;">
 						<h4 class="media-heading" id="addDonorFormModalTitle" style="color: white;">
 							<strong>
-								Add New User
+								Edit User
 							</strong>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
@@ -619,10 +619,10 @@
 						  </div>
 						  <div class="form-group custom-form-group">
 						    <div class="form-inline row custom-inline-row">
-						      <div id="username-form" class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
-						      	<label for="username" class="control-label">Username</label>
-						        <input id="username" name="username" type="text" class="form-control" placeholder="Username" autocomplete="off" onkeyup="check_username()" style="width: 195px;" value="<%= user.username %>" required>
-						        <div id="user-exist" class="help-block with-errors custom-with-errors"></div>
+						      <div id="edit-username-form" class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
+						      	<label for="edit-username" class="control-label">Username</label>
+						        <input id="edit-username" name="username" type="text" class="form-control" placeholder="Username" autocomplete="off" onkeyup="check_username()" style="width: 195px;" value="<%= user.username %>" required>
+						        <div id="edit-user-exist" class="help-block with-errors custom-with-errors"></div>
 						      </div>
 						      <div class="form-group custom-form-group col-xs-3 custom-col" style="padding-left: 0; padding-right: 10px; width: 205px;">
 						      	<label for="email" class="control-label">Email</label>
@@ -715,9 +715,16 @@
 	</div>
 
   <script>
+  	var username_def;
   	/* Reset Form Fields */
     $('#addDonorFormModal').on('hidden.bs.modal', function(){
       $(this).find('#addDonorForm')[0].reset();
+    });
+    $('#editDonorFormModal<%= user.id %>').on('hidden.bs.modal', function(){
+      $(this).find('#editDonorForm')[0].reset();
+    });
+    $('#editDonorFormModal<%= user.id %>').on('shown.bs.modal', function(){
+      username_def = $('#edit-username').val();
     });
     $('#changeUserStatusModal<%= user.id %>').on('hidden.bs.modal', function(){
       window.location.reload();
@@ -725,14 +732,30 @@
     /* Check Username Existence */
     function check_username(){
     	var usernames = gon.usernames;
+    	var username = document.getElementById('username').value;
+    	var user_exist = document.getElementById('user-exist');
+    	var username_form = document.getElementById('username-form');
+    	var edit_username = document.getElementById('edit-username').value;
+    	var edit_user_exist = document.getElementById('edit-user-exist');
+    	var edit_username_form = document.getElementById('edit-username-form');
     	for (var i = 0; i < usernames.length; i++) {
-    		if (usernames[i] == document.getElementById('username').value) {
-    			document.getElementById('user-exist').innerHTML = 'Username already exists';
-    			document.getElementById('username-form').classList.add('has-error','has-danger');
-    			break;
-    		} else {
-    			document.getElementById('user-exist').innerHTML = '';
-    		}
+    		if($('#addDonorFormModal').hasClass('in')) {
+	    		if (usernames[i] == username) {
+	    			user_exist.innerHTML = 'Username already exists';
+	    			username_form.classList.add('has-error','has-danger');
+	    			break;
+	    		} else {
+	    			user_exist.innerHTML = '';
+	    		}
+	    	} else {
+	    		if (usernames[i] == edit_username && usernames[i] != username_def) {
+	    			edit_user_exist.innerHTML = 'Username already exists';
+	    			edit_username_form.classList.add('has-error','has-danger');
+	    			break;
+	    		} else {
+	    			edit_user_exist.innerHTML = '';
+	    		}
+	    	}
     	}
     }
   </script>

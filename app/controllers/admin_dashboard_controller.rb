@@ -10,20 +10,38 @@ class AdminDashboardController < ApplicationController
 	end
 
 	def edit
+		if params[:password].present?
+			@user.update(month: @month, day: @day, year: @year,
+												user_status: params[:user_status], user_type: params[:usertype],
+												blood_type: params[:bloodtype], first_name: params[:firstname],
+												last_name: params[:lastname], username: params[:username],
+												email: params[:email], password: params[:password],
+												address_street: params[:street], address_city: params[:city],
+												address_province: params[:province], contact_info: params[:contactno],
+												gender: params[:gender])
+		else
+			@user.update(month: @month, day: @day, year: @year,
+												user_status: params[:user_status], user_type: params[:usertype],
+												blood_type: params[:bloodtype], first_name: params[:firstname],
+												last_name: params[:lastname], username: params[:username],
+												email: params[:email], address_street: params[:street],
+												address_city: params[:city], address_province: params[:province],
+												contact_info: params[:contactno], gender: params[:gender])
+		end
 	end
 
 	def create
 		@month = Date.parse(params[:birthday]).strftime('%B')
 		@day = Date.parse(params[:birthday]).strftime('%d')
 		@year = Date.parse(params[:birthday]).strftime('%Y')
-		@user = User.new(:month => @month, :day => @day, :year => @year,
-											:user_status => 'Active', :user_type => params[:usertype],
-											:blood_type => params[:bloodtype], :first_name => params[:firstname],
-											:last_name => params[:lastname], :username => params[:username],
-											:email => params[:email], :password => params[:password],
-											:address_street => params[:street], :address_city => params[:city],
-											:address_province => params[:province], :contact_info => params[:contactno],
-											:gender => params[:gender])
+		@user = User.new(month: @month, day: @day, year: @year,
+											user_status: 'Active', user_type: params[:usertype],
+											blood_type: params[:bloodtype], first_name: params[:firstname],
+											last_name: params[:lastname], username: params[:username],
+											email: params[:email], password: params[:password],
+											address_street: params[:street], address_city: params[:city],
+											address_province: params[:province], contact_info: params[:contactno],
+											gender: params[:gender])
 		if User.exists?(username: params[:username])
 			@user = User.new
 		else
